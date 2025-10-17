@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>金富士智能排座系统 · 手机版自适应</title>
+<style>
+  :root { --bg:#f7f7fb; --text:#111; --bar:#ffffff; --shadow:0 6px 20px rgba(0,0,0,.06); }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif; }
+  .topbar{ position:fixed; top:0; left:0; right:0; height:54px; background:var(--bar); display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:var(--shadow); z-index:5; }
+  .topbar small{ font-weight:500; opacity:.8; margin-left:8px; }
+  .wrap{ position:absolute; top:54px; bottom:0; left:0; right:0; overflow:auto; -webkit-overflow-scrolling:touch; }
+  .stage{ position:relative; width:100%; min-height:100%; background:#f2f4f7; }
+  .iframe-holder{ position:relative; width:100%; }
+  iframe{ border:0; display:block; transform-origin:0 0; }
+  .hint{ position:fixed; right:10px; bottom:10px; background:#000; color:#fff; font-size:12px; padding:8px 10px; border-radius:10px; opacity:.7; z-index:10; }
+  @media (min-width: 1025px){
+    .topbar{ display:none; }
+    .wrap{ top:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">金富士智能排座系统 <small>（手机版自适应视图）</small></div>
+  <div class="wrap">
+    <div class="stage">
+      <div class="iframe-holder">
+        <!-- IMPORTANT: this loads your original page sitting next to this file -->
+        <iframe id="app" src="KaneFuji_Seating_iOS_WeChat.html" title="Kane Fuji Smart Seating"></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="hint">提示：已按手机宽度自动缩放</div>
+
+<script>
+(function(){
+  var BASE_W = 1280;   // reference desktop width
+  var BASE_H = 2200;   // reference desktop height
+  var app = document.getElementById('app');
+  var holder = document.querySelector('.iframe-holder');
+
+  function fit(){
+    var vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var scale = vw / BASE_W;
+    app.style.width = BASE_W + 'px';
+    app.style.height = BASE_H + 'px';
+    app.style.transform = 'scale(' + scale + ')';
+    holder.style.height = (BASE_H * scale) + 'px';
+  }
+  window.addEventListener('resize', fit);
+  document.addEventListener('visibilitychange', fit);
+  fit();
+})();
+</script>
+</body>
+</html>
